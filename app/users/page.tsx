@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Button from "../components/Button";
 
 export default function Page() {
     const router = useRouter()
@@ -14,14 +15,20 @@ export default function Page() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input 
-                name="q" 
-                placeholder="Username to search" 
-                value={query}
-                onChange={(e) => setQuery(e.currentTarget.value)}
-            />
-            <input type="submit" value="Senden" />
-        </form>
+        <>
+            <form onSubmit={handleSubmit}>
+                <input 
+                    name="q" 
+                    placeholder="Username to search" 
+                    value={query}
+                    onChange={(e) => setQuery(e.currentTarget.value)}
+                />
+                <input type="submit" value="Senden" />
+            </form>
+
+            <div className="pt-8">
+                Show details for <Button href={`/users/${query}`}>{query}</Button>
+            </div>
+        </>
     )
 }
