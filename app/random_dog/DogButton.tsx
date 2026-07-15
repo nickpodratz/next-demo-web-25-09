@@ -1,12 +1,7 @@
-import Link from "next/link";
+import Button from "../components/Button";
 
 export default function DogButton() {
     return (
-        <Link
-            href="/random_dog"
-            className="border rounded-2xl bg-gray-200 text-gray-900"
-        >
-            Random Dogs
-        </Link>
+        <Button href="/random_dog">Random Dogs</Button>
     )
 }
