@@ -26,9 +26,12 @@ export default function Page() {
                 <input type="submit" value="Senden" />
             </form>
 
-            <div className="pt-8">
-                Show details for <Button href={`/users/${query}`}>{query}</Button>
-            </div>
+            {query && 
+                <div className="pt-8">
+                    Show details for <Button href={`/users/${query}`}>{query}</Button>
+                </div>
+            }
+            
         </>
     )
 }
