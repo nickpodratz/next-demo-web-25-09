@@ -11,9 +11,9 @@ export default async function Pokemon() {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="grid grid-cols-4">
       {pokemons.map((p) => (
-        <p key={p.name}>{p.name}</p>
+        <div key={p.name} className="border border-black h-16 p-2">{p.name}</div>
       ))}
     </div>
   );
