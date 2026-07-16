@@ -8,6 +8,7 @@ export default function NavBar() {
     { href: "/", label: "Home" },
     { href: "/users", label: "Users" },
     { href: "/login", label: "login" },
+    { href: "/pokemons", label: "Pokemons" },
   ];
 
   return (

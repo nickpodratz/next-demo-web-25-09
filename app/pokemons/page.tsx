@@ -1,17 +1,14 @@
 import { Suspense } from "react";
 import PokemonGrid from "./PokemonsGrid";
+import Spinner from "./Spinner";
 
-export default async function Page() {
+export default async function PokemonPage() {
   return (
-    <main className="border p-16">
-        <Suspense
-            fallback={
-            <p className="text-orange-600 text-2xl font-bold text-center">
-                Loading pokemon...
-            </p>
-            }
-        >
+    <>
+        <h1 className="text-6xl pb-8 pl-2">Pokemons</h1>
+        <Suspense fallback={<Spinner/>} >
             <PokemonGrid />
         </Suspense>
-    </main>  );
+    </>
+     );
 }
