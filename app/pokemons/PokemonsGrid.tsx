@@ -5,10 +5,13 @@ export default async function PokemonGrid() {
   const { results } = await response.json()
   const pokemons: Pokemon[] = results ?? []
 
-  // Simuliere langsame UI.
-  await new Promise((resolve) => {
-    setTimeout(resolve, 4000);
-  });
+  // Simuliere langsame UI mit Fehler.
+    await new Promise((resolve) => {
+        setTimeout(resolve, 4000);
+    }).then(() => {
+        throw new Error('Something went wrong');
+    });
+
 
   return (
     <div className="grid grid-cols-4">
