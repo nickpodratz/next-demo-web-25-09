@@ -1,4 +1,5 @@
 import { createPost, getPosts } from "./actions"
+import BlogPost from "./BlogPost";
 
 export default async function BlogPage() {
   const posts = await getPosts();
@@ -16,8 +17,7 @@ export default async function BlogPage() {
       <ul className="pt-12">
         {posts.map(post => (
           <li key={post.id} className="pb-6">
-            <h2 className="text-2xl">{post.title}</h2>
-            <p>{post.content}</p>
+            <BlogPost {...post} />
           </li>
         ))}
       </ul>

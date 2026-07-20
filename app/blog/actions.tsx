@@ -23,3 +23,11 @@ export async function getPosts() {
         orderBy: { createdAt: "desc" }
     })
 }
+
+export async function deletePost(id: number) {
+    await prisma.post.delete({
+        where: { id: id }
+    })
+
+    revalidatePath("/blog")
+}
