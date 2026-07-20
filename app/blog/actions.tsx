@@ -17,3 +17,9 @@ export async function createPost(formData: FormData) {
 
   revalidatePath("/blog")
 }
+
+export async function getPosts() {
+    return await prisma.post.findMany({
+        orderBy: { createdAt: "desc" }
+    })
+}

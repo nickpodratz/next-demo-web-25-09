@@ -1,25 +1,22 @@
-import { createPost } from "./actions"
-import { prisma } from "@/prisma/prisma.client"
+import { createPost, getPosts } from "./actions"
 
 export default async function BlogPage() {
-  const posts = await prisma.post.findMany({
-    orderBy: { createdAt: "desc" }
-  })
+  const posts = await getPosts();
 
   return (
-    <main>
-      <h1>Blog</h1>
+    <main className="m-16">
+      <h1 className="text-6xl pb-6 pt-8">Blog</h1>
 
-      <form action={createPost}>
+      <form action={createPost} className="flex flex-col w-200 text-left border gap-4 p-4" >
         <input name="title" placeholder="Title" />
         <textarea name="content" placeholder="Content" />
         <button type="submit">Create</button>
       </form>
 
-      <ul>
+      <ul className="pt-12">
         {posts.map(post => (
-          <li key={post.id}>
-            <h2>{post.title}</h2>
+          <li key={post.id} className="pb-6">
+            <h2 className="text-2xl">{post.title}</h2>
             <p>{post.content}</p>
           </li>
         ))}
