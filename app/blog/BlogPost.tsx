@@ -17,10 +17,10 @@ export default function BlogPost({ id, title, content }: { id: number, title: st
     }
 
     return (
-        <>
+        <div className="border rounded-xl p-4">
             <h2 className="text-2xl">{title}</h2>
             <p>{content}</p>
             <button onClick={handleDelete} disabled={isPending}>Delete</button>
-        </>
+        </div>
     )
 }
