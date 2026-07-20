@@ -5,7 +5,7 @@ services:
     container_name: prisma_demo_db
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_PASSWORD: "1234"
       POSTGRES_DB: prisma_demo_db
     ports:
       - "5432:5432"
