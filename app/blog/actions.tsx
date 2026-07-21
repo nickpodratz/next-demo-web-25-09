@@ -18,12 +18,6 @@ export async function createPost(formData: FormData) {
   revalidatePath("/blog")
 }
 
-export async function getPosts() {
-    return await prisma.post.findMany({
-        orderBy: { createdAt: "desc" }
-    })
-}
-
 export async function deletePost(id: number) {
     await prisma.post.delete({
         where: { id: id }

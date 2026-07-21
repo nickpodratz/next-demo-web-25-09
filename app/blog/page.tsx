@@ -1,8 +1,12 @@
-import { createPost, getPosts } from "./actions"
+import { prisma } from "@/prisma/prisma.client";
+import { createPost } from "./actions"
 import BlogPost from "./BlogPost";
 
 export default async function BlogPage() {
-  const posts = await getPosts();
+  const posts = await prisma.post.findMany({
+          orderBy: { createdAt: "desc" }
+      })
+  ;
 
   return (
     <main className="m-16">
