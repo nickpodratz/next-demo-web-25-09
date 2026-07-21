@@ -1,15 +1,13 @@
+import 'dotenv/config'
 import { PrismaNeon } from '@prisma/adapter-neon';
 import { PrismaClient } from '@prisma/client'
-import { loadEnvFile } from 'process';
-
-loadEnvFile(".env.example")
 
 const globalForPrisma = global as unknown as {
   prisma: PrismaClient
 }
 
 const adapter = new PrismaNeon({
-  connectionString: process.env.DATABASE_URL 
+  connectionString: process.env.DATABASE_URL! 
 });
 
 export const prisma =
