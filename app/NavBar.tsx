@@ -6,9 +6,10 @@ export default function NavBar() {
   const pathname = usePathname()
   const links = [
     { href: "/", label: "Home" },
+    { href: "/blog", label: "Blog" },
     { href: "/users", label: "Users" },
-    { href: "/login", label: "login" },
     { href: "/pokemons", label: "Pokemons" },
+    { href: "/login", label: "login" },
   ];
 
   return (
