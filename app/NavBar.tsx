@@ -7,8 +7,8 @@ export default function NavBar() {
   const links = [
     { href: "/", label: "Home" },
     { href: "/blog", label: "Blog" },
-    { href: "/users", label: "Users" },
     { href: "/pokemons", label: "Pokemons" },
+    { href: "/users", label: "Users" },
     { href: "/login", label: "login" },
   ];
 
