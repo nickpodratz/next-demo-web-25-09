@@ -1,33 +1,19 @@
 "use server"
 
-import { prisma } from "@/prisma/prisma.client"
 import { revalidatePath } from "next/cache"
+import postService from "./service"
 
 export async function createPost(formData: FormData) {
   const title = formData.get("title") as string
   const content = formData.get("content") as string
 
-  await prisma.post.create({
-    data: {
-      title,
-      content,
-      published: true
-    }
-  })
+  await postService.create(title, content)
 
   revalidatePath("/blog")
 }
 
-export async function getPosts() {
-    return await prisma.post.findMany({
-        orderBy: { createdAt: "desc" }
-    })
-}
-
 export async function deletePost(id: number) {
-    await prisma.post.delete({
-        where: { id: id }
-    })
+    await postService.delete(id)
 
     revalidatePath("/blog")
 }
