@@ -10,22 +10,39 @@ async function seed() {
     const count = await prisma.post.count();
 
     if (count > 0) {
-    console.log("Seed already applied. Skipping.");
-    return;
+      console.log("Seed already applied. Skipping.");
+      return;
     }
 
-    await prisma.post.create({
-        data: {
+    await prisma.author.create({
+    data: {
+      name: "Alice",
+      email: "alice@example.com",
+      posts: {
+        create: [
+          {
+            title: "Alice's first post",
+            content: "Hello from Alice!",
+            published: true
+          },
+          {
+            title: "Alice's second post",
+            content: "Another day, another post",
+            published: false
+          },
+          {
             title: "Hallo, Syntax",
             content: "Willkommen im 4. Modul von Web Dev."
-        }
-    })
-    await prisma.post.create({
-        data: {
+          },
+          {
             title: "Ein weiterer Post",
             content: "Hier nun weitere Details zum zweiten Post."
         }
-    })
+        ]
+      }
+    }
+  }
+)
 }
 
 seed()
