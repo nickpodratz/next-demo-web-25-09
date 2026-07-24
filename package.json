@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "studio": "docker compose exec -e BROWSER=none nextjs npx prisma studio --port 5555"
+    "dev:up": "docker compose up",
+    "dev:stop": "docker compose down",
+    "dev:reset": "docker compose down -v",
+    "dev:studio": "docker compose exec -e BROWSER=none nextjs npx prisma studio --port 5555"
   },
   "dependencies": {
     "@prisma/adapter-neon": "^7.9.0",
