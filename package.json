@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "studio": "docker compose exec -e BROWSER=none nextjs npx prisma studio --port 5555"
   },
   "dependencies": {
     "@prisma/adapter-neon": "^7.9.0",

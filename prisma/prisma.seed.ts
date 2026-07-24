@@ -37,7 +37,7 @@ async function seed() {
             {
               title: "Ein weiterer Post",
               content: "Hier nun weitere Details zum zweiten Post."
-          }
+            }
           ]
         }
       }
