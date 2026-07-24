@@ -54,6 +54,11 @@ async function seed() {
             title: "Bob's first post",
             content: "Hi, I'm Bob",
             published: true
+          },
+          {
+            title: "Bob's second post",
+            content: "Hi, this is more from Bob.",
+            published: true
           }
         ]
       }
