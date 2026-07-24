@@ -2,10 +2,11 @@
 set -e
 
 npx prisma generate
-npx prisma migrate deploy
 
 if [ "$VERCEL_ENV" = "preview" ]; then
-  npx prisma db seed
+  npx prisma migrate reset --force
+else
+  npx prisma migrate deploy
 fi
 
 next build
