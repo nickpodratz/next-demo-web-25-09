@@ -1,3 +1,4 @@
+import { createPasswordDigest } from "@/lib/password";
 import { prisma } from "./prisma.client";
 
 // Prevent seed data in prod DB.
@@ -17,6 +18,7 @@ async function seed() {
     const alice = await prisma.author.create({
       data: {
         name: "Alice",
+        passwordDigest: await createPasswordDigest("1234"),
         email: "alice@example.com",
         posts: {
           create: [
@@ -47,6 +49,7 @@ async function seed() {
   const bob = await prisma.author.create({
     data: {
       name: "Bob",
+      passwordDigest: await createPasswordDigest("1234"),
       email: "bob@example.com",
       posts: {
         create: [
