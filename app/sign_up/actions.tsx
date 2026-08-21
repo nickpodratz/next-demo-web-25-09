@@ -1,27 +1,44 @@
 "use server"
 
-import { createPasswordDigest } from "@/lib/password";
-import { prisma } from "@/prisma/prisma.client";
-import { Author } from "./types/author";
+import { redirect, RedirectType } from "next/navigation"
+import { revalidatePath } from "next/cache"
+import authorService, { isDuplicateEmailError } from "@/lib/author.service"
+import { createSession } from "@/lib/session"
+import { validateEmail, validateName, validateNewPassword } from "@/lib/validation"
 
-export async function handleSignUp(formData: FormData) {
-    const email = formData.get("email") as string
-    const password = formData.get("password") as string
-    const name = formData.get("name") as string
-
-    const author = await createAuthor({email, password, name})
+export type SignUpFormState = {
+    values?: { email?: string; name?: string }
+    errors?: { email?: string[]; name?: string[]; password?: string[] }
+    message?: string
 }
 
-export async function createAuthor({email, password, name}: {email: string, password: string, name: string}): Promise<Author | null> {
-    try {
-        const passwordDigest = await createPasswordDigest(password)
+export async function signUp(_prevState: SignUpFormState, formData: FormData): Promise<SignUpFormState> {
+    const email = String(formData.get("email") ?? "").trim()
+    const name = String(formData.get("name") ?? "").trim()
+    const password = String(formData.get("password") ?? "")
 
-        const author = await prisma.author.create({
-            data: { email, passwordDigest, name }
-        })
-
-        return author
-    } catch {
-        return null
+    const errors = {
+        email: validateEmail(email),
+        name: validateName(name),
+        password: validateNewPassword(password),
     }
+    if (errors.email || errors.name || errors.password) {
+        return { values: { email, name }, errors }
+    }
+
+    let author
+    try {
+        author = await authorService.create({ email, name, password })
+    } catch (error) {
+        if (isDuplicateEmailError(error)) {
+            return { values: { email, name }, errors: { email: ["That email address is already taken."] } }
+        }
+        console.error(error)
+        return { values: { email, name }, message: "An error occurred while creating your account." }
+    }
+
+    await createSession(author.id)
+
+    revalidatePath("/", "layout")
+    redirect(`/users/${author.id}`, RedirectType.replace)
 }

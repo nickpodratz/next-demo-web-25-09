@@ -1,30 +1,31 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useActionState } from "react"
+import SubmitButton from "@/app/components/SubmitButton"
+import { login, type LoginFormState } from "./actions"
+
+const inputClass = "border rounded px-3 py-2"
+
+const initialState: LoginFormState = {}
 
 export default function LoginForm() {
-    const router = useRouter()
-    const [error, setError] = useState(false)
-
-    async function handleSubmit(formData: FormData) {
-        const username = formData.get("username")
-        const password = formData.get("password")
-
-        if (password === "1234") {
-            router.replace(`/users/${username}`)
-            setError(false)
-        } else {
-            setError(true)
-        }
-    }
+    const [state, action] = useActionState(login, initialState)
 
     return (
-        <form action={handleSubmit}>
-            <input name="username" type="text" placeholder="username"/>
-            <input name="password" type="password" placeholder="password"/>
-            <input type="submit" value="Login"/>
-            { error && <div>The credentials were wrong; tip: password=1234</div> }
+        <form action={action} className="flex flex-col gap-4 w-96">
+            <div>
+                <input name="email" type="email" placeholder="email" defaultValue={state.values?.email ?? ""} className={inputClass} />
+                {state.errors?.email && <p className="text-red-600 text-sm">{state.errors.email.join(" ")}</p>}
+            </div>
+
+            <div>
+                <input name="password" type="password" placeholder="password" className={inputClass} />
+                {state.errors?.password && <p className="text-red-600 text-sm">{state.errors.password.join(" ")}</p>}
+            </div>
+
+            <SubmitButton pendingText="Logging in…">Login</SubmitButton>
+
+            {state.message && <p className="text-red-600 text-sm">{state.message}</p>}
         </form>
     )
 }
