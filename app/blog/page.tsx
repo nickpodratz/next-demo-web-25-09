@@ -8,8 +8,8 @@ export default async function BlogPage() {
   const [posts, user] = await Promise.all([postService.getAll(), getCurrentUser()])
 
   return (
-    <main className="m-16">
-      <h1 className="text-6xl pb-6 pt-8">Blog</h1>
+    <section>
+      <h1 className="pb-6 text-4xl font-bold tracking-tight">Blog</h1>
 
       {user ? (
         <form action={createPost} className="flex flex-col w-200 text-left border gap-4 p-4" >
@@ -28,6 +28,6 @@ export default async function BlogPage() {
           </li>
         ))}
       </ul>
-    </main>
+    </section>
   )
 }

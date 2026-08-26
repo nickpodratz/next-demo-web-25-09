@@ -3,8 +3,8 @@ import { handleSubmit } from "./actions";
 
 export default function Page() {
   return (
-    <main>
+    <section>
       <UserForm onSubmit={handleSubmit} />
-    </main>
+    </section>
   );
 }

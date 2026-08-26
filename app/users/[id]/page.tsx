@@ -12,10 +12,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     if (!author) notFound()
 
     return (
-        <main>
+        <section>
             <Profile author={author} />
             <Button href="/users">Back to Users</Button>
             <Button href="/">Back to Home</Button>
-        </main>
+        </section>
     )
 }

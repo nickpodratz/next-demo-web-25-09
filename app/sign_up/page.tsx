@@ -3,8 +3,8 @@ import SignUpForm from "./SignUpForm"
 export default function Page() {
 
     return (
-        <main>
+        <section>
             <SignUpForm />
-        </main>
+        </section>
     )
 }

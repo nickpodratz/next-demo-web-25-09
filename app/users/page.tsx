@@ -10,8 +10,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ q
     const authors = await authorService.search(query)
 
     return (
-        <main className="m-16">
-            <h1 className="text-4xl pb-6">Users</h1>
+        <section>
+            <h1 className="pb-6 text-4xl font-bold tracking-tight">Users</h1>
 
             <form action="/users" method="get" className="flex gap-2">
                 <input name="q" defaultValue={query} placeholder="Search by name or email" className={inputClass} />
@@ -28,6 +28,6 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ q
             </ul>
 
             {authors.length === 0 && <p className="pt-8">No users match &ldquo;{query}&rdquo;.</p>}
-        </main>
+        </section>
     )
 }
