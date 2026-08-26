@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next Demo
 
-## Getting Started
+A teaching project for the Web 25-09 module, demonstrating core [Next.js](https://nextjs.org) App Router patterns: Server and Client Components, streaming with Suspense, Server Actions with form state, and database-backed authentication.
 
-First, run the development server:
+## Stack
+
+- **Next.js 16** (App Router, Turbopack) with **React 19** and **TypeScript**
+- **Tailwind CSS 4** for styling
+- **Prisma 7** with **PostgreSQL** — `pg` adapter locally, Neon adapter on Vercel
+- **argon2** password hashing with database-backed sessions
+
+## Getting started
+
+The recommended setup runs the app and PostgreSQL together via Docker:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev:up
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This starts PostgreSQL, applies migrations, seeds sample data, and serves the app at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Seeded logins: `alice@example.com` and `bob@example.com`, password `1234`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Other Docker commands:
 
-## Learn More
+```bash
+npm run dev:stop     # stop containers
+npm run dev:reset    # stop containers and delete the database volume
+npm run dev:studio   # open Prisma Studio at http://localhost:5555
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Without Docker
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Point `DATABASE_URL` and `DATABASE_URL_UNPOOLED` in `.env` at a running PostgreSQL instance, then:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm install
+npx prisma migrate deploy
+npx prisma db seed
+npm run dev
+```
 
-## Deploy on Vercel
+## Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Script | Purpose |
+| --- | --- |
+| `npm run dev` | Start the dev server (expects a reachable database) |
+| `npm run build` | Production build |
+| `npm run start` | Serve the production build |
+| `npm run lint` | ESLint (`next lint` was removed in Next.js 16) |
+| `npm run typecheck` | TypeScript check without emitting |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Routes
+
+| Route | Demonstrates |
+| --- | --- |
+| `/` | Home page with navigation |
+| `/blog` | Server Component data fetching, Server Actions with authorization, `revalidatePath` |
+| `/pokemons` | Streaming with `<Suspense>`, nested layout, `error.tsx` boundary, `next/image` |
+| `/random_dog` | Uncached `fetch` (`cache: "no-store"`), nested layout |
+| `/users`, `/users/[id]` | `searchParams` filtering, dynamic route params, `notFound()` |
+| `/login`, `/sign_up` | `useActionState` forms, validation, sessions |
+| `/server_action_form` | Minimal Server Action passed as a prop to a Client Component |
+
+## Documentation
+
+Short guides live in [`docs/`](docs/):
+
+- [Architecture](docs/architecture.md) — project layout and rendering model
+- [Authentication](docs/authentication.md) — sign-up, login, and session design
+- [Database](docs/database.md) — Prisma setup, migrations, and seeding
+- [Deployment](docs/deployment.md) — Vercel build pipeline and environments

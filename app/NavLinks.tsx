@@ -10,7 +10,7 @@ export default function NavLinks({ links }: { links: { href: string, label: stri
       {links.map(link => (
         <span key={link.href}>
           {pathname === link.href ? (
-            <span className="text-gray-400">{link.label}</span> // disabled
+            <span className="text-gray-400">{link.label}</span>
           ) : (
             <Link href={link.href} className="text-blue-500 hover:underline">
               {link.label}

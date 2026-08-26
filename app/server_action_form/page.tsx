@@ -4,7 +4,7 @@ import { handleSubmit } from "./actions";
 export default function Page() {
   return (
     <main>
-      <UserForm onSubmit={handleSubmit} />
+      <UserForm submitAction={handleSubmit} />
     </main>
   );
 }

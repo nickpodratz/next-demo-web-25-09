@@ -2,7 +2,7 @@ import PokemonCard from "./PokemonCard";
 import { PokemonResult } from "./types/Pokemon";
 
 export default async function PokemonGrid() {
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon');
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon', { cache: 'force-cache' });
   const { results } = await response.json()
   const pokemons: PokemonResult[] = results ?? []
 
