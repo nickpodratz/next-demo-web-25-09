@@ -1,7 +1,6 @@
 import { createPasswordDigest } from "@/lib/password";
 import { prisma } from "./prisma.client";
 
-// Prevent seed data in prod DB.
 if (process.env.VERCEL_ENV === "production") {
   console.log("Auto-seed disabled for this environment.");
   process.exit(0);

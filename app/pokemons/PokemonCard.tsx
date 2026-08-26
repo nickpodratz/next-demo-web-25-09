@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Pokemon, PokemonResult } from "./types/Pokemon";
 
 export default async function PokemonCard({ pokemonResult }: { pokemonResult: PokemonResult }) {
-    const response = await fetch(pokemonResult.url)
+    const response = await fetch(pokemonResult.url, { cache: "force-cache" })
     const pokemon: Pokemon = await response.json()
 
     return (
