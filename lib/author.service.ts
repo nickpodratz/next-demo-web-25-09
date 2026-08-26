@@ -23,6 +23,14 @@ async function findByEmailWithDigest(email: string) {
     })
 }
 
+async function updateAuthor(id: number, { email, name }: { email: string; name: string }) {
+    return prisma.author.update({
+        where: { id },
+        data: { email: normalizeEmail(email), name: name.trim() },
+        select: { id: true, name: true, email: true },
+    })
+}
+
 async function findById(id: number) {
     return prisma.author.findUnique({
         where: { id },
@@ -60,6 +68,7 @@ export function isDuplicateEmailError(error: unknown) {
 
 const authorService = {
     create: createAuthor,
+    update: updateAuthor,
     findByEmailWithDigest,
     findById,
     search: searchAuthors,
