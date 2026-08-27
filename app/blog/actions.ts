@@ -28,3 +28,18 @@ export async function deletePost(id: number) {
 
     revalidatePath("/blog")
 }
+
+export async function createComment(postId: number, formData: FormData) {
+    const user = await requireUser()
+    if (!Number.isInteger(postId)) throw new Error("Invalid post id.")
+
+    const content = String(formData.get("content") ?? "").trim()
+    if (!content) throw new Error("Comment cannot be empty.")
+
+    const post = await postService.find(postId)
+    if (!post) throw new Error("Post not found.")
+
+    await postService.addComment(postId, content, user.id)
+
+    revalidatePath("/blog")
+}

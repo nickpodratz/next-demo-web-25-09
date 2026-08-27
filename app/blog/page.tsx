@@ -38,9 +38,22 @@ export default async function BlogPage() {
         {posts.map(post => (
           <li key={post.id}>
             <BlogPost
-              {...post}
+              id={post.id}
+              title={post.title}
+              content={post.content}
               authorName={post.author?.name}
               canDelete={post.authorId === user?.id}
+              canComment={!!user}
+              comments={post.comments.map(comment => ({
+                id: comment.id,
+                content: comment.content,
+                createdAt: comment.createdAt.toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                }),
+                authorName: comment.author?.name ?? undefined,
+              }))}
             />
           </li>
         ))}

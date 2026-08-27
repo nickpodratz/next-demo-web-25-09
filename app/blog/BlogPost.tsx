@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { deletePost } from "./actions";
+import CommentSection, { type CommentData } from "./CommentSection";
 
 export default function BlogPost({
   id,
@@ -9,12 +10,16 @@ export default function BlogPost({
   content,
   authorName,
   canDelete,
+  canComment,
+  comments,
 }: {
   id: number;
   title: string;
   content: string;
   authorName?: string;
   canDelete: boolean;
+  canComment: boolean;
+  comments: CommentData[];
 }) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -49,6 +54,7 @@ export default function BlogPost({
         </button>
       )}
       {error && <p className="pt-2 text-sm text-red-600">{error}</p>}
+      <CommentSection postId={id} comments={comments} canComment={canComment} />
     </article>
   );
 }

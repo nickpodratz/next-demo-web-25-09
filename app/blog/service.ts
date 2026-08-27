@@ -22,6 +22,25 @@ async function getPosts() {
             createdAt: true,
             authorId: true,
             author: { select: { id: true, name: true } },
+            comments: {
+                orderBy: { createdAt: "asc" },
+                select: {
+                    id: true,
+                    content: true,
+                    createdAt: true,
+                    author: { select: { id: true, name: true } },
+                }
+            },
+        }
+    })
+}
+
+async function addComment(postId: number, content: string, authorId: number) {
+    await prisma.comment.create({
+        data: {
+            content,
+            postId,
+            authorId,
         }
     })
 }
@@ -43,7 +62,8 @@ const postService = {
     create: createPost,
     getAll: getPosts,
     find: findPost,
-    delete: deletePost
+    delete: deletePost,
+    addComment: addComment
 }
 
 export default postService
