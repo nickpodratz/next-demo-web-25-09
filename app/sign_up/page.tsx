@@ -1,10 +1,13 @@
-import SignUpForm from "./SignUpForm"
+import PageShell from "../components/PageShell";
+import SignUpForm from "./SignUpForm";
 
 export default function Page() {
-
-    return (
-        <section>
-            <SignUpForm />
-        </section>
-    )
+  return (
+    <PageShell
+      title="Sign up"
+      description="Create an account to join the demo and publish blog posts."
+    >
+      <SignUpForm />
+    </PageShell>
+  );
 }

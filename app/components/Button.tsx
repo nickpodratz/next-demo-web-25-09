@@ -1,12 +1,20 @@
 import Link from "next/link";
 
-export default function Button({href, className, children}: {href: string, className?: string, children: React.ReactNode}) {
-    return (
-        <Link
-            href={href}
-            className={`border rounded-2xl bg-gray-200 text-gray-900 px-4 py-2 ${className ?? ""}`}
-        >
-            {children}
-        </Link>
-    )
+const baseClass =
+  "inline-flex items-center justify-center rounded-full border border-navy/10 bg-white px-5 py-2.5 text-sm font-semibold text-navy shadow-sm transition-colors hover:border-lilac hover:bg-lilac/10";
+
+export default function Button({
+  href,
+  className,
+  children,
+}: {
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link href={href} className={`${baseClass} ${className ?? ""}`}>
+      {children}
+    </Link>
+  );
 }

@@ -1,14 +1,17 @@
 import { Suspense } from "react";
+import PageShell from "../components/PageShell";
 import PokemonGrid from "./PokemonsGrid";
 import Spinner from "./Spinner";
 
 export default async function PokemonPage() {
   return (
-    <>
-        <h1 className="pb-6 text-4xl font-bold tracking-tight">Pokemons</h1>
-        <Suspense fallback={<Spinner/>} >
-            <PokemonGrid />
-        </Suspense>
-    </>
-     );
+    <PageShell
+      title="Pokemons"
+      description="Browse the first generation of Pokémon fetched from the PokéAPI."
+    >
+      <Suspense fallback={<Spinner />}>
+        <PokemonGrid />
+      </Suspense>
+    </PageShell>
+  );
 }

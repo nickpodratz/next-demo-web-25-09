@@ -1,33 +1,54 @@
-import Link from "next/link"
-import { createPost } from "./actions"
+import Link from "next/link";
+import PageShell from "../components/PageShell";
+import { createPost } from "./actions";
 import BlogPost from "./BlogPost";
 import postService from "./service";
 import { getCurrentUser } from "@/lib/auth";
+import SubmitButton from "../components/SubmitButton";
+import { formClass, inputClass, textareaClass } from "../components/formStyles";
 
 export default async function BlogPage() {
-  const [posts, user] = await Promise.all([postService.getAll(), getCurrentUser()])
+  const [posts, user] = await Promise.all([
+    postService.getAll(),
+    getCurrentUser(),
+  ]);
 
   return (
-    <section>
-      <h1 className="pb-6 text-4xl font-bold tracking-tight">Blog</h1>
-
+    <PageShell
+      title="Blog"
+      description="Read posts from the community or share your own when signed in."
+    >
       {user ? (
-        <form action={createPost} className="flex flex-col w-200 text-left border gap-4 p-4" >
-          <input name="title" placeholder="Title" />
-          <textarea name="content" placeholder="Content" />
-          <button type="submit">Create</button>
+        <form action={createPost} className={`${formClass} max-w-2xl border-b border-navy/10 pb-8`}>
+          <input name="title" placeholder="Title" className={inputClass} />
+          <textarea name="content" placeholder="Content" className={textareaClass} />
+          <SubmitButton pendingText="Creating…">Create post</SubmitButton>
         </form>
       ) : (
-        <p>You must <Link href="/login" className="text-blue-500 hover:underline">log in</Link> to create a post.</p>
+        <p className="border-b border-navy/10 pb-8 text-navy-soft">
+          You must{" "}
+          <Link href="/login" className="font-semibold text-navy hover:text-lilac">
+            log in
+          </Link>{" "}
+          to create a post.
+        </p>
       )}
 
-      <ul className="pt-12">
+      <ul className="flex flex-col gap-6 pt-8">
         {posts.map(post => (
-          <li key={post.id} className="pb-6">
-            <BlogPost {...post} authorName={post.author?.name} canDelete={post.authorId === user?.id} />
+          <li key={post.id}>
+            <BlogPost
+              {...post}
+              authorName={post.author?.name}
+              canDelete={post.authorId === user?.id}
+            />
           </li>
         ))}
       </ul>
-    </section>
-  )
+
+      {posts.length === 0 && (
+        <p className="pt-8 text-center text-navy-soft">No posts yet. Be the first to write one.</p>
+      )}
+    </PageShell>
+  );
 }

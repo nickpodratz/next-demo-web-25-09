@@ -1,17 +1,28 @@
-"use client"
+"use client";
 
-import { useFormStatus } from "react-dom"
+import { useFormStatus } from "react-dom";
 
-export default function SubmitButton({ children, pendingText, className }: { children: React.ReactNode, pendingText?: string, className?: string }) {
-    const { pending } = useFormStatus()
+const baseClass =
+  "inline-flex items-center justify-center rounded-full bg-navy px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-navy-soft disabled:cursor-not-allowed disabled:opacity-50";
 
-    return (
-        <button
-            type="submit"
-            disabled={pending}
-            className={`border rounded-2xl bg-gray-200 text-gray-900 px-4 py-2 disabled:opacity-50 ${className ?? ""}`}
-        >
-            {pending && pendingText ? pendingText : children}
-        </button>
-    )
+export default function SubmitButton({
+  children,
+  pendingText,
+  className,
+}: {
+  children: React.ReactNode;
+  pendingText?: string;
+  className?: string;
+}) {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className={`${baseClass} ${className ?? ""}`}
+    >
+      {pending && pendingText ? pendingText : children}
+    </button>
+  );
 }
